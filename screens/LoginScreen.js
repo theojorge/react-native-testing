@@ -39,6 +39,10 @@ const LoginScreen = () => {
     navigation.navigate('RegisterScreen');
   };
 
+  const handleForgotPassword = () => {
+    navigation.navigate('ForgotPasswordScreen');
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/twits.png')} style={styles.image} />
@@ -76,6 +80,9 @@ const LoginScreen = () => {
           </Button>
           <Button mode="text" onPress={handleRegister} style={styles.registerButton}>
             Don't have an account? Register
+          </Button>
+          <Button mode="text" onPress={handleForgotPassword} style={styles.forgotPasswordButton}>
+            Forgot Password?
           </Button>
         </Card.Content>
       </Card>
@@ -118,6 +125,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#1E88E5',
   },
   registerButton: {
+    marginTop: 12,
+  },
+  forgotPasswordButton: {
     marginTop: 12,
   },
   divider: {

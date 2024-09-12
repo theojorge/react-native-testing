@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Text, Title } from 'react-native-paper';
+import { Appbar, IconButton, Title } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
@@ -23,21 +23,33 @@ const WelcomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Title style={styles.title}>Welcome</Title>
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" onPress={handleViewProfile} style={styles.button}>
-          View My Profile
-        </Button>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" onPress={handleSearchProfile} style={styles.button}>
-          Search for Profiles
-        </Button>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" onPress={handleLogout} style={styles.button}>
-          Logout
-        </Button>
+      <Appbar.Header style={styles.appbar}>
+        <IconButton
+          icon="account-circle"
+          color="#1E88E5"
+          size={28}
+          onPress={handleViewProfile}
+          style={styles.iconButton}
+        />
+        <IconButton
+          icon="magnify"
+          color="#1E88E5"
+          size={28}
+          onPress={handleSearchProfile}
+          style={styles.iconButton}
+        />
+        <IconButton
+          icon="logout"
+          color="#1E88E5"
+          size={28}
+          onPress={handleLogout}
+          style={styles.iconButton}
+        />
+      </Appbar.Header>
+
+      {/* Título "Welcome" fuera del Appbar */}
+      <View style={styles.titleContainer}>
+        <Title style={styles.title}>Welcome</Title>
       </View>
     </View>
   );
@@ -46,23 +58,23 @@ const WelcomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#E3F2FD', // Fondo azul claro
+  },
+  appbar: {
+    backgroundColor: 'transparent', // Fondo transparente en la barra
+    elevation: 0, // Sin sombra
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  titleContainer: {
+    marginTop: 20, // Espacio desde el Appbar
     alignItems: 'center',
-    backgroundColor: '#E3F2FD', // Color de fondo azul claro
-    padding: 16,
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
     color: '#0D47A1', // Color del texto para el título
   },
-  buttonContainer: {
-    marginBottom: 16, // Espacio entre los botones
-    width: '80%',   // Ajustar el ancho para el botón
-  },
-  button: {
-    borderRadius: 4,
-    backgroundColor: '#1E88E5',
+  iconButton: {
   },
 });
 
