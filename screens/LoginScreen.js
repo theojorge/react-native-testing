@@ -2,21 +2,22 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Alert, Image } from 'react-native';
 import { TextInput, Button, Title, Paragraph, Card, HelperText, Divider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../components/CustomButton'; 
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     let valid = true;
-    if (!username) {
-      setUsernameError(true);
+    if (!email) {
+      setEmailError(true);
       valid = false;
     } else {
-      setUsernameError(false);
+      setEmailError(false);
     }
     if (!password) {
       setPasswordError(true);
@@ -26,10 +27,27 @@ const LoginScreen = () => {
     }
 
     if (valid) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'WelcomeScreen' }],
-      });
+      try {
+        const response = await fetch('https://reqres.in/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'WelcomeScreen' }],
+          });
+        } else {
+          Alert.alert('Login Failed', data.error || 'An error occurred');
+        }
+      } catch (error) {
+        Alert.alert('Error', 'An unexpected error occurred');
+      }
     } else {
       Alert.alert('Error', 'Por favor, ingresa todos los campos.');
     }
@@ -52,14 +70,14 @@ const LoginScreen = () => {
         <Card.Content>
           <TextInput
             style={styles.input}
-            label="Username"
-            value={username}
-            onChangeText={setUsername}
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
             theme={{ colors: { primary: '#1E88E5' } }}
-            error={usernameError}
+            error={emailError}
           />
-          <HelperText type="error" visible={usernameError}>
-            Username is required
+          <HelperText type="error" visible={emailError}>
+            Email is required
           </HelperText>
           <Divider style={styles.divider} />
           <TextInput
@@ -75,9 +93,7 @@ const LoginScreen = () => {
             Password is required
           </HelperText>
           <Divider style={styles.divider} />
-          <Button mode="contained" onPress={handleLogin} style={styles.button}>
-            Login
-          </Button>
+          <CustomButton title="Login" onPress={handleLogin} />
           <Button mode="text" onPress={handleRegister} style={styles.registerButton}>
             Don't have an account? Register
           </Button>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button, Title, Paragraph, Card, HelperText, Divider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../components/CustomButton'; 
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -36,9 +37,7 @@ const RegisterScreen = () => {
     if (valid) {
       Alert.alert('Success', 'Account registered successfully');
       navigation.navigate('LoginScreen');
-    } else {
-      Alert.alert('Error', 'Please check your inputs.');
-    }
+    } 
   };
 
   return (
@@ -85,9 +84,7 @@ const RegisterScreen = () => {
             Passwords do not match
           </HelperText>
           <Divider style={styles.divider} />
-          <Button mode="contained" onPress={handleRegister} style={styles.button}>
-            Register
-          </Button>
+          <CustomButton title="Register" onPress={handleRegister} /> 
         </Card.Content>
       </Card>
     </View>

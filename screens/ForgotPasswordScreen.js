@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button, Title, Paragraph, Card, HelperText, Divider } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import CustomButton from '../components/CustomButton'; 
+
 
 const ForgotPasswordScreen = () => {
   const navigation = useNavigation();
@@ -33,13 +35,11 @@ const ForgotPasswordScreen = () => {
             theme={{ colors: { primary: '#1E88E5' } }}
             error={emailError}
           />
-          <HelperText type="error" visible={emailError}>
+          <HelperText type="error" visible={emailError}> 
             Email is required
           </HelperText>
           <Divider style={styles.divider} />
-          <Button mode="contained" onPress={handleResetPassword} style={styles.button}>
-            Send Reset Instructions
-          </Button>
+          <CustomButton title="Send Reset Instructions" onPress={handleResetPassword} />
         </Card.Content>
       </Card>
     </View>
